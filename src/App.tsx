@@ -1,10 +1,14 @@
 import CssBaseline from "@material-ui/core/CssBaseline";
+import { Layout } from "components/Layout";
+import { HomePage } from "pages/home";
 
 function App() {
   return (
     <div>
       <CssBaseline />
-      Hello world
+      <Layout>
+        <HomePage />
+      </Layout>
     </div>
   );
 }
