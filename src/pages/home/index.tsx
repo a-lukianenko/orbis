@@ -1,7 +1,12 @@
+import { SearchBar } from "components/SearchBar";
+import { useStyles } from "./styles";
+
 export const HomePage = () => {
+  const { main } = useStyles();
+
   return (
-    <main>
-      <h2>Home page</h2>
+    <main className={main}>
+      <SearchBar />
     </main>
   );
 };
