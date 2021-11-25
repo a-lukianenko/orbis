@@ -8,7 +8,10 @@ import { useDebouncedCallback } from "./hooks/useDebouncedCallback";
 import { Adornment } from "./components/Adornment";
 
 type Props = {
-  handleSearchresults: (res: Nullable<Ticker[]>) => void;
+  handleSearchresults: (res: {
+    results: Ticker[] | null;
+    search: string;
+  }) => void;
 };
 
 export const SearchBar = ({ handleSearchresults }: Props) => {
@@ -23,7 +26,7 @@ export const SearchBar = ({ handleSearchresults }: Props) => {
   const requestTickers = useCallback(async () => {
     if (tickerName === "") {
       setTickerName("");
-      handleSearchresults([]);
+      handleSearchresults({ results: [], search: "" });
       return;
     }
 
@@ -34,7 +37,7 @@ export const SearchBar = ({ handleSearchresults }: Props) => {
         data: { results },
       } = response;
 
-      handleSearchresults(results);
+      handleSearchresults({ results, search: tickerName });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return handleAxiosError(error);
