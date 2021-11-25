@@ -1,18 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-type Stock = {
-  //
-};
-
-export interface StocksState {
-  stocks: Stock[];
+export interface TickerState {
+  tickers: Ticker[];
 }
 
-const initialState: StocksState = {
-  stocks: [],
-} as StocksState;
+const initialState = {
+  tickers: [],
+} as TickerState;
 
-export const stocksSlice = createSlice({
+export const tickerSlcie = createSlice({
   name: "stocks",
   initialState,
   reducers: {},
@@ -22,4 +18,4 @@ export const stocksSlice = createSlice({
 // We can also write thunks by hand, which may contain both sync and async logic.
 // Here's an example of conditionally dispatching actions based on current state.
 
-export default stocksSlice.reducer;
+export default tickerSlcie.reducer;

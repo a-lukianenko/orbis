@@ -1,9 +1,9 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
-import stocksReducer from "app/features/stocks/stocksSlice";
+import tickerReducer from "app/features/stocks/tickerSlice";
 
 export const store = configureStore({
   reducer: {
-    stocks: stocksReducer,
+    stocks: tickerReducer,
   },
 });
 

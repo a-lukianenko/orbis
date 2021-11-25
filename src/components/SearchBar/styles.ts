@@ -8,9 +8,3 @@ export const useTextFieldStyles = makeStyles({
     borderBottom: "1px solid #E9ECF4",
   },
 });
-
-export const useIconStyles = makeStyles({
-  colorPrimary: {
-    color: "grey",
-  },
-});
