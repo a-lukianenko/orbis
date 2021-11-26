@@ -4,7 +4,7 @@ import { useTextFieldStyles } from "./styles";
 import { handleAxiosError } from "api/httpClient";
 import axios from "axios";
 import { getTickers } from "api/getTickers";
-import { useDebouncedCallback } from "./hooks/useDebouncedCallback";
+import { useDebouncedCallback } from "../../hooks/useDebouncedCallback";
 import { Adornment } from "./components/Adornment";
 
 type Props = {

@@ -13,4 +13,5 @@ type TickerDetails = {
   hq_address: string;
   hq_country: string;
   phone: string;
+  description: string;
 };
