@@ -5,6 +5,7 @@ import { useStyles } from "./styles";
 import { getTickerDetails } from "api/getTickerDetails";
 import { TickerTitle } from "./components/TickerTitle";
 import { Content } from "./components/Content";
+import { AboutTicker } from "./components/AboutTicker";
 
 export type SearchResults = {
   results: Ticker[] | null;
@@ -63,14 +64,22 @@ export const HomePage = () => {
           />
         )}
 
-      <Content>
-        {tickerDetails?.symbol && tickerDetails?.name && (
+      {tickerDetails && (
+        <Content>
           <TickerTitle
             symbol={tickerDetails.symbol}
             name={tickerDetails.name}
           />
-        )}
-      </Content>
+
+          <AboutTicker
+            symbol={tickerDetails.symbol}
+            sector={tickerDetails.sector}
+            industry={tickerDetails.industry}
+            ceo={tickerDetails.ceo}
+            employees={tickerDetails.employees}
+          />
+        </Content>
+      )}
     </main>
   );
 };

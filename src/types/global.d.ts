@@ -6,4 +6,8 @@ type Ticker = {
 type TickerDetails = {
   symbol: string;
   name: string;
+  sector: string;
+  industry: string;
+  ceo: string;
+  employees: number;
 };
