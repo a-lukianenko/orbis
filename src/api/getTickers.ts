@@ -1,9 +1,9 @@
 import { httpClient } from "./httpClient";
-import { tickers } from "./url";
+import { tickersURL } from "./url";
 
 export const getTickers = (tickerName: string) => {
   return httpClient({
-    url: tickers,
+    url: tickersURL,
     params: {
       active: true,
       sort: "ticker",

@@ -7,9 +7,10 @@ import { useHighlightStyles } from "./styles";
 
 type Props = {
   data: SearchResults;
+  handleResultSelect: (ticker: string) => void;
 };
 
-export const SearchResultsList = ({ data }: Props) => {
+export const SearchResultsList = ({ data, handleResultSelect }: Props) => {
   const { highlight } = useHighlightStyles();
 
   const { results, search } = data;
@@ -21,7 +22,11 @@ export const SearchResultsList = ({ data }: Props) => {
       {Array.isArray(results) &&
         results.map(({ ticker, name }) => {
           return (
-            <ListItem key={ticker} button>
+            <ListItem
+              key={ticker}
+              button
+              onClick={() => handleResultSelect(ticker)}
+            >
               <ListItemText>{ticker}</ListItemText>
               <ListItemText>
                 {search ? highlightMatch(name, search, highlight) : name}

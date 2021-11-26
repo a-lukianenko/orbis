@@ -1,5 +1,5 @@
 import TextField from "@material-ui/core/TextField";
-import { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { useTextFieldStyles } from "./styles";
 import { handleAxiosError } from "api/httpClient";
 import axios from "axios";
@@ -8,13 +8,14 @@ import { useDebouncedCallback } from "./hooks/useDebouncedCallback";
 import { Adornment } from "./components/Adornment";
 
 type Props = {
+  isSearchSelected: boolean;
   handleSearchresults: (res: {
     results: Ticker[] | null;
     search: string;
   }) => void;
 };
 
-export const SearchBar = ({ handleSearchresults }: Props) => {
+export const SearchBar = ({ isSearchSelected, handleSearchresults }: Props) => {
   const classesTextField = useTextFieldStyles();
 
   // `tickerName` stands for ticker symbol and company name
@@ -25,9 +26,7 @@ export const SearchBar = ({ handleSearchresults }: Props) => {
 
   const requestTickers = useCallback(async () => {
     if (tickerName === "") {
-      setTickerName("");
-      handleSearchresults({ results: [], search: "" });
-      return;
+      return handleSearchresults({ results: [], search: "" });
     }
 
     try {
@@ -50,6 +49,12 @@ export const SearchBar = ({ handleSearchresults }: Props) => {
   }, [handleSearchresults, tickerName]);
 
   useDebouncedCallback(requestTickers);
+
+  useEffect(() => {
+    if (isSearchSelected) {
+      setTickerName("");
+    }
+  }, [isSearchSelected]);
 
   return (
     <TextField

@@ -1,3 +1,3 @@
-export const tickers = "/v3/reference/tickers";
-export const tickerDetails = (stocksTicker: string) =>
+export const tickersURL = "/v3/reference/tickers";
+export const createTickerDetailsURL = (stocksTicker: string) =>
   `/v1/meta/symbols/${stocksTicker}/company`;
