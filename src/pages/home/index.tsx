@@ -4,8 +4,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useStyles } from "./styles";
 import { getTickerDetails } from "api/getTickerDetails";
 import { TickerTitle } from "./components/TickerTitle";
-import { Content } from "./components/Content";
 import { AboutTicker } from "./components/AboutTicker";
+import Box from "@material-ui/core/Box/Box";
 
 export type SearchResults = {
   results: Ticker[] | null;
@@ -65,7 +65,7 @@ export const HomePage = () => {
         )}
 
       {tickerDetails && (
-        <Content>
+        <Box py='30px' px='45px'>
           <TickerTitle
             symbol={tickerDetails.symbol}
             name={tickerDetails.name}
@@ -81,7 +81,7 @@ export const HomePage = () => {
             hq_country={tickerDetails.hq_country}
             phone={tickerDetails.phone}
           />
-        </Content>
+        </Box>
       )}
     </main>
   );
