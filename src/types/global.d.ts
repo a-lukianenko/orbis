@@ -10,4 +10,7 @@ type TickerDetails = {
   industry: string;
   ceo: string;
   employees: number;
+  hq_address: string;
+  hq_country: string;
+  phone: string;
 };

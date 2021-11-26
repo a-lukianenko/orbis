@@ -77,6 +77,9 @@ export const HomePage = () => {
             industry={tickerDetails.industry}
             ceo={tickerDetails.ceo}
             employees={tickerDetails.employees}
+            hq_address={tickerDetails.hq_address}
+            hq_country={tickerDetails.hq_country}
+            phone={tickerDetails.phone}
           />
         </Content>
       )}
