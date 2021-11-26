@@ -1,6 +1,7 @@
 import Box from "@material-ui/core/Box/Box";
 import Typography from "@material-ui/core/Typography/Typography";
 import { Address } from "./Address";
+import { GeneralInfo } from "./GeneralInfo";
 import { useStyles } from "./styles";
 
 type Props = Pick<
@@ -15,9 +16,6 @@ type Props = Pick<
   | "phone"
 >;
 
-const usLocaleNumber = (number: number) =>
-  new Intl.NumberFormat("us-US").format(number);
-
 export const AboutTicker = ({
   symbol,
   sector,
@@ -28,7 +26,10 @@ export const AboutTicker = ({
   hq_country,
   phone,
 }: Props) => {
-  const { title, value } = useStyles();
+  const { title } = useStyles();
+
+  const generalInfoProps = { sector, industry, ceo, employees };
+  const addressProps = { hq_address, hq_country, phone };
 
   return (
     <Box mt={2}>
@@ -37,45 +38,9 @@ export const AboutTicker = ({
       </Typography>
 
       <Box mt={2} display='flex' justifyContent='space-between' width='50%'>
-        <Box>
-          <Box>
-            <Typography display='inline' variant='body1'>
-              Sector:
-            </Typography>
-            <Typography display='inline' className={value}>
-              {sector}
-            </Typography>
-          </Box>
+        <GeneralInfo {...generalInfoProps} />
 
-          <Box>
-            <Typography display='inline'>Industry:</Typography>
-            <Typography display='inline' className={value}>
-              {industry}
-            </Typography>
-          </Box>
-
-          <Box>
-            <Typography display='inline'>CEO:</Typography>
-            <Typography display='inline' className={value}>
-              {ceo}
-            </Typography>
-          </Box>
-
-          <Box>
-            <Typography display='inline'>Employees:</Typography>
-            <Typography display='inline' className={value}>
-              {usLocaleNumber(employees)}
-            </Typography>
-          </Box>
-        </Box>
-
-        <Box>
-          <Address
-            hq_address={hq_address}
-            hq_country={hq_country}
-            phone={phone}
-          />
-        </Box>
+        <Address {...addressProps} />
       </Box>
     </Box>
   );
