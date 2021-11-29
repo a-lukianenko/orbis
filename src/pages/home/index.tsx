@@ -10,6 +10,8 @@ import { Description } from "./components/TickerDetails/Description";
 import { AddressMap } from "./components/TickerDetails/AddressMap";
 import { RelatedStocks } from "./components/TickerDetails/RelatedStocks";
 import { Tags } from "./components/TickerDetails/Tags";
+import { getTickerPrice } from "api/getTickerPrice";
+import { TickerPrice } from "./components/TickerDetails/TickerPrice";
 
 export type SearchResults = {
   results: Ticker[] | null;
@@ -28,9 +30,9 @@ export const HomePage = () => {
     useState<SearchResults>(initialState);
 
   const [selectedTicker, setSelectedTicker] = useState("");
-  const [tickerDetails, setTickerDetails] = useState<TickerDetails | null>(
-    null
-  );
+  const [tickerDetails, setTickerDetails] = useState<
+    (TickerDetails & TickerPrice) | null
+  >(null);
 
   const handleSearchresults = useCallback(
     (results) => setSearchResults(results),
@@ -44,9 +46,19 @@ export const HomePage = () => {
   useEffect(() => {
     const requestTickerDetails = async () => {
       try {
-        const response = await getTickerDetails(selectedTicker);
+        const [detailsRes, priceRes] = await Promise.all([
+          getTickerDetails(selectedTicker),
+          getTickerPrice(selectedTicker),
+        ]);
 
-        setTickerDetails(response.data);
+        const { data: details } = detailsRes;
+        const {
+          data: { open, close },
+        } = priceRes;
+
+        const tickerDetails = { ...details, open, close };
+
+        setTickerDetails(tickerDetails);
       } catch (error) {}
     };
 
@@ -74,6 +86,8 @@ export const HomePage = () => {
             symbol={tickerDetails.symbol}
             name={tickerDetails.name}
           />
+
+          <TickerPrice open={tickerDetails.open} close={tickerDetails.close} />
 
           <AboutTicker
             symbol={tickerDetails.symbol}

@@ -17,3 +17,8 @@ type TickerDetails = {
   similar: string[];
   tags: string[];
 };
+
+type TickerPrice = {
+  open: number;
+  close: number;
+};
