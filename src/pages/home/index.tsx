@@ -13,6 +13,7 @@ import { Tags } from "./components/TickerDetails/Tags";
 import { getTickerPrice } from "api/getTickerPrice";
 import { TickerPrice } from "./components/TickerDetails/TickerPrice";
 import { getPriceAggregates } from "api/getPriceAggregates";
+import { AggregatesChart } from "./components/TickerDetails/AggregatesChart";
 
 export type SearchResults = {
   results: Ticker[] | null;
@@ -106,6 +107,8 @@ export const HomePage = () => {
             hq_country={tickerDetails.hq_country}
             phone={tickerDetails.phone}
           />
+
+          <AggregatesChart data={tickerDetails.aggregates} />
 
           <AddressMap address={tickerDetails.hq_address} />
 
