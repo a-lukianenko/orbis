@@ -41,7 +41,10 @@ export const HomePage = () => {
     []
   );
 
-  const handleTickerSelect = (ticker: string) => setSelectedTicker(ticker);
+  const handleTickerSelect = useCallback(
+    (ticker: string) => setSelectedTicker(ticker),
+    []
+  );
 
   const { results } = searchResults;
 
@@ -114,7 +117,10 @@ export const HomePage = () => {
 
           <Description description={tickerDetails.description} />
 
-          <RelatedStocks relatedStocks={tickerDetails.similar} />
+          <RelatedStocks
+            relatedStocks={tickerDetails.similar}
+            handleTickerSelect={handleTickerSelect}
+          />
 
           <Tags tags={tickerDetails.tags} />
         </Box>
