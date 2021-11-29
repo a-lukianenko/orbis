@@ -1,8 +1,7 @@
 import Box from "@material-ui/core/Box/Box";
-import Typography from "@material-ui/core/Typography/Typography";
+import { SectionTitle } from "../TickerDetails/SectionTitle";
 import { Address } from "./Address";
 import { GeneralInfo } from "./GeneralInfo";
-import { useStyles } from "./styles";
 
 type Props = Pick<
   TickerDetails,
@@ -26,16 +25,13 @@ export const AboutTicker = ({
   hq_country,
   phone,
 }: Props) => {
-  const { title } = useStyles();
-
   const generalInfoProps = { sector, industry, ceo, employees };
   const addressProps = { hq_address, hq_country, phone };
+  const title = `About ${symbol}`;
 
   return (
-    <Box mt={2}>
-      <Typography component='h3' variant='h6' className={title}>
-        About {symbol}
-      </Typography>
+    <Box component='section' mt={2}>
+      <SectionTitle>{title}</SectionTitle>
 
       <Box mt={2} display='flex' justifyContent='space-between' width='50%'>
         <GeneralInfo {...generalInfoProps} />

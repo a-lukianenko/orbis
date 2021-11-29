@@ -1,6 +1,6 @@
-import Box from "@material-ui/core/Box/Box";
 import Button from "@material-ui/core/Button/Button";
 import { theme } from "theme";
+import { SectionTitle } from "../SectionTitle";
 
 type Props = {
   relatedStocks: string[];
@@ -8,10 +8,8 @@ type Props = {
 
 export const RelatedStocks = ({ relatedStocks }: Props) => {
   return (
-    <div>
-      <Box component='h3' fontSize='18px' fontWeight='bold'>
-        Related Stocks
-      </Box>
+    <section>
+      <SectionTitle>Related Stocks</SectionTitle>
       {relatedStocks.map((stock, i) => {
         return (
           <Button
@@ -28,6 +26,6 @@ export const RelatedStocks = ({ relatedStocks }: Props) => {
           </Button>
         );
       })}
-    </div>
+    </section>
   );
 };

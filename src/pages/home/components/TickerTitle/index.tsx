@@ -7,7 +7,7 @@ export const TickerTitle = ({ symbol, name }: Props) => {
   const { symbol: symbolStyle, name: nameStyle } = useStyles();
 
   return (
-    <div>
+    <section>
       <Typography
         variant='h5'
         component='h2'
@@ -19,6 +19,6 @@ export const TickerTitle = ({ symbol, name }: Props) => {
       <Typography display='inline' component='span' className={nameStyle}>
         {name}
       </Typography>
-    </div>
+    </section>
   );
 };

@@ -1,15 +1,13 @@
-import Box from "@material-ui/core/Box/Box";
 import Button from "@material-ui/core/Button/Button";
 import { theme } from "theme";
+import { SectionTitle } from "../SectionTitle";
 
 type Props = Pick<TickerDetails, "tags">;
 
 export const Tags = ({ tags }: Props) => {
   return (
-    <div>
-      <Box component='h3' fontSize='18px' fontWeight='bold'>
-        Tags
-      </Box>
+    <section>
+      <SectionTitle>Tags</SectionTitle>
       {tags.map((tag, i) => {
         return (
           <Button
@@ -30,6 +28,6 @@ export const Tags = ({ tags }: Props) => {
           </Button>
         );
       })}
-    </div>
+    </section>
   );
 };

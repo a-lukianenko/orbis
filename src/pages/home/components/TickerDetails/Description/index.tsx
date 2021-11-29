@@ -6,6 +6,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import { useStyles } from "./styles";
+import { SectionTitle } from "../SectionTitle";
 
 type Props = {
   description: string;
@@ -32,10 +33,8 @@ export const Description = ({ description }: Props) => {
   }, []);
 
   return (
-    <Box display='flex' flexDirection='column'>
-      <Box component='h3' fontSize='18px' fontWeight='bold'>
-        Description
-      </Box>
+    <Box component='section' display='flex' flexDirection='column'>
+      <SectionTitle>Description</SectionTitle>
 
       <>
         <Collapse in={!checked} collapsedSize={COLLAPSED_SIZE}>
