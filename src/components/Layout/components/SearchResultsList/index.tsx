@@ -2,7 +2,7 @@ import Box from "@material-ui/core/Box/Box";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem/ListItem";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
-import { SearchResults } from "pages/home";
+import { SearchResults } from "components/Layout";
 import { highlightMatch } from "utils/highlightMatch";
 import { useTextStyles, useListStyles } from "./styles";
 
@@ -19,7 +19,14 @@ export const SearchResultsList = ({ data, handleResultSelect }: Props) => {
 
   if (results === null) {
     return (
-      <Box mt={3} textAlign='center' fontSize='18px'>
+      <Box
+        mt={3}
+        textAlign='center'
+        position='absolute'
+        top='80px'
+        width='100%'
+        fontSize='18px'
+      >
         No Results Found
       </Box>
     );

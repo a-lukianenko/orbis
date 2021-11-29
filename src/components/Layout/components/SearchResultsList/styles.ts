@@ -4,6 +4,8 @@ export const useListStyles = makeStyles({
   root: {
     position: "absolute",
     zIndex: 10,
+    top: 70,
+    right: 0,
     width: "100%",
     backgroundColor: "#ffffff",
   },

@@ -6,9 +6,9 @@ import { theme } from "theme";
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Layout>
-        <HomePage />
-      </Layout>
+      <Layout />
+      {/* <HomePage />
+      </Layout> */}
     </ThemeProvider>
   );
 }

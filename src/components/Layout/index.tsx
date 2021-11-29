@@ -7,48 +7,29 @@ import IconButton from "@material-ui/core/IconButton";
 
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { ReactNode, useState } from "react";
+import { useTheme } from "@material-ui/core/styles";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import { SearchBar } from "components/SearchBar";
+import { SearchResultsList } from "./components/SearchResultsList";
+import { getPriceAggregates } from "api/getPriceAggregates";
+import { getTickerPrice } from "api/getTickerPrice";
+import { getTickerDetails } from "api/getTickerDetails";
+import { HomePage } from "pages/home";
+import { useStyles } from "./styles";
 
 type Props = {
-  children: ReactNode;
+  children?: ReactNode;
 };
 
-const drawerWidth = 72;
+export type SearchResults = {
+  results: Ticker[] | null;
+  search: string;
+};
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
-  drawer: {
-    [theme.breakpoints.up("sm")]: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-  },
-  appBar: {
-    [theme.breakpoints.up("sm")]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
-    },
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up("sm")]: {
-      display: "none",
-    },
-  },
-  drawerPaper: {
-    width: drawerWidth,
-    backgroundColor: "#B6B7C3",
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    border: "none",
-  },
-}));
+const initialState = {
+  results: [],
+  search: "",
+} as SearchResults;
 
 export const Layout = ({ children }: Props) => {
   const classes = useStyles();
@@ -58,6 +39,54 @@ export const Layout = ({ children }: Props) => {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  const [searchResults, setSearchResults] =
+    useState<SearchResults>(initialState);
+
+  const [selectedTicker, setSelectedTicker] = useState("");
+  const [tickerDetails, setTickerDetails] = useState<
+    (TickerDetails & TickerPrice & { aggregates: PriceAggregate[] }) | null
+  >(null);
+
+  const handleSearchresults = useCallback(
+    (results) => setSearchResults(results),
+    []
+  );
+
+  const handleTickerSelect = useCallback((ticker: string) => {
+    setSelectedTicker(ticker);
+    setSearchResults(initialState);
+  }, []);
+
+  const { results } = searchResults;
+
+  useEffect(() => {
+    const requestTickerDetails = async () => {
+      try {
+        const [detailsRes, priceRes, aggregatesRes] = await Promise.all([
+          getTickerDetails(selectedTicker),
+          getTickerPrice(selectedTicker),
+          getPriceAggregates(selectedTicker),
+        ]);
+
+        const { data: details } = detailsRes;
+        const {
+          data: { open, close },
+        } = priceRes;
+
+        const tickerDetails = {
+          ...details,
+          open,
+          close,
+          aggregates: aggregatesRes.data.results,
+        };
+
+        setTickerDetails(tickerDetails);
+      } catch (error) {}
+    };
+
+    if (selectedTicker !== "") requestTickerDetails();
+  }, [selectedTicker]);
 
   return (
     <div className={classes.root}>
@@ -75,9 +104,16 @@ export const Layout = ({ children }: Props) => {
           </IconButton>
 
           <SearchBar
-            isSearchSelected={false}
-            handleSearchresults={() => console.log("from SearchBar")}
+            isSearchSelected={Boolean(selectedTicker)}
+            handleSearchresults={handleSearchresults}
           />
+
+          {(results === null || results?.length > 0) && (
+            <SearchResultsList
+              data={searchResults}
+              handleResultSelect={handleTickerSelect}
+            />
+          )}
         </Toolbar>
       </AppBar>
 
@@ -112,7 +148,12 @@ export const Layout = ({ children }: Props) => {
         </Hidden>
       </nav>
 
-      <main className={classes.content}>{children}</main>
+      <main className={classes.content}>
+        <HomePage
+          tickerDetails={tickerDetails}
+          handleTickerSelect={handleTickerSelect}
+        />
+      </main>
     </div>
   );
 };

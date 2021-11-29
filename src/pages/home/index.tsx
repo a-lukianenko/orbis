@@ -1,8 +1,4 @@
-import { SearchResultsList } from "./components/SearchResultsList";
-import { SearchBar } from "components/SearchBar";
-import { useCallback, useEffect, useState } from "react";
 import { useStyles } from "./styles";
-import { getTickerDetails } from "api/getTickerDetails";
 import { TickerTitle } from "./components/TickerDetails/TickerTitle";
 import { AboutTicker } from "./components/TickerDetails/AboutTicker";
 import Box from "@material-ui/core/Box/Box";
@@ -10,86 +6,20 @@ import { Description } from "./components/TickerDetails/Description";
 import { AddressMap } from "./components/TickerDetails/AddressMap";
 import { RelatedStocks } from "./components/TickerDetails/RelatedStocks";
 import { Tags } from "./components/TickerDetails/Tags";
-import { getTickerPrice } from "api/getTickerPrice";
 import { TickerPrice } from "./components/TickerDetails/TickerPrice";
-import { getPriceAggregates } from "api/getPriceAggregates";
 import { AggregatesChart } from "./components/TickerDetails/AggregatesChart";
 
-export type SearchResults = {
-  results: Ticker[] | null;
-  search: string;
-};
-
-const initialState = {
-  results: [],
-  search: "",
-} as SearchResults;
-
-export const HomePage = () => {
+export const HomePage = ({
+  tickerDetails,
+  handleTickerSelect,
+}: {
+  tickerDetails: any;
+  handleTickerSelect: (t: string) => void;
+}) => {
   const { main } = useStyles();
-
-  const [searchResults, setSearchResults] =
-    useState<SearchResults>(initialState);
-
-  const [selectedTicker, setSelectedTicker] = useState("");
-  const [tickerDetails, setTickerDetails] = useState<
-    (TickerDetails & TickerPrice & { aggregates: PriceAggregate[] }) | null
-  >(null);
-
-  const handleSearchresults = useCallback(
-    (results) => setSearchResults(results),
-    []
-  );
-
-  const handleTickerSelect = useCallback((ticker: string) => {
-    setSelectedTicker(ticker);
-    setSearchResults(initialState);
-  }, []);
-
-  const { results } = searchResults;
-
-  useEffect(() => {
-    const requestTickerDetails = async () => {
-      try {
-        const [detailsRes, priceRes, aggregatesRes] = await Promise.all([
-          getTickerDetails(selectedTicker),
-          getTickerPrice(selectedTicker),
-          getPriceAggregates(selectedTicker),
-        ]);
-
-        const { data: details } = detailsRes;
-        const {
-          data: { open, close },
-        } = priceRes;
-
-        const tickerDetails = {
-          ...details,
-          open,
-          close,
-          aggregates: aggregatesRes.data.results,
-        };
-
-        setTickerDetails(tickerDetails);
-      } catch (error) {}
-    };
-
-    if (selectedTicker !== "") requestTickerDetails();
-  }, [selectedTicker]);
 
   return (
     <div className={main}>
-      {/* <SearchBar
-        handleSearchresults={handleSearchresults}
-        isSearchSelected={Boolean(selectedTicker)}
-      /> */}
-
-      {(results === null || results?.length > 0) && (
-        <SearchResultsList
-          data={searchResults}
-          handleResultSelect={handleTickerSelect}
-        />
-      )}
-
       {tickerDetails && (
         <Box py='30px' px='45px'>
           <TickerTitle
