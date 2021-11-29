@@ -22,3 +22,7 @@ type TickerPrice = {
   open: number;
   close: number;
 };
+
+type PriceAggregate = {
+  c: number;
+};

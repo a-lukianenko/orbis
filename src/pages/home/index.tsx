@@ -12,6 +12,7 @@ import { RelatedStocks } from "./components/TickerDetails/RelatedStocks";
 import { Tags } from "./components/TickerDetails/Tags";
 import { getTickerPrice } from "api/getTickerPrice";
 import { TickerPrice } from "./components/TickerDetails/TickerPrice";
+import { getPriceAggregates } from "api/getPriceAggregates";
 
 export type SearchResults = {
   results: Ticker[] | null;
@@ -31,7 +32,7 @@ export const HomePage = () => {
 
   const [selectedTicker, setSelectedTicker] = useState("");
   const [tickerDetails, setTickerDetails] = useState<
-    (TickerDetails & TickerPrice) | null
+    (TickerDetails & TickerPrice & { aggregates: PriceAggregate[] }) | null
   >(null);
 
   const handleSearchresults = useCallback(
@@ -46,9 +47,10 @@ export const HomePage = () => {
   useEffect(() => {
     const requestTickerDetails = async () => {
       try {
-        const [detailsRes, priceRes] = await Promise.all([
+        const [detailsRes, priceRes, aggregatesRes] = await Promise.all([
           getTickerDetails(selectedTicker),
           getTickerPrice(selectedTicker),
+          getPriceAggregates(selectedTicker),
         ]);
 
         const { data: details } = detailsRes;
@@ -56,7 +58,12 @@ export const HomePage = () => {
           data: { open, close },
         } = priceRes;
 
-        const tickerDetails = { ...details, open, close };
+        const tickerDetails = {
+          ...details,
+          open,
+          close,
+          aggregates: aggregatesRes.data.results,
+        };
 
         setTickerDetails(tickerDetails);
       } catch (error) {}
