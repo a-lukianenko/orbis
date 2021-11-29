@@ -1,4 +1,4 @@
-import { getPreviousWeekDay } from "../getPreviousWeekDay";
+import { getPreviousWeekDay } from "utils/date/getPreviousWeekDay";
 
 describe("getPreviousWeekDay", () => {
   it("finds previous business day", () => {
