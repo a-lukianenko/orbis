@@ -7,12 +7,10 @@ import { theme } from "theme";
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div>
-        <CssBaseline />
-        <Layout>
-          <HomePage />
-        </Layout>
-      </div>
+      <CssBaseline />
+      <Layout>
+        <HomePage />
+      </Layout>
     </ThemeProvider>
   );
 }
