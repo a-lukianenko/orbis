@@ -77,11 +77,11 @@ export const HomePage = () => {
   }, [selectedTicker]);
 
   return (
-    <main className={main}>
-      <SearchBar
+    <div className={main}>
+      {/* <SearchBar
         handleSearchresults={handleSearchresults}
         isSearchSelected={Boolean(selectedTicker)}
-      />
+      /> */}
 
       {(results === null || results?.length > 0) && (
         <SearchResultsList
@@ -124,6 +124,6 @@ export const HomePage = () => {
           <Tags tags={tickerDetails.tags} />
         </Box>
       )}
-    </main>
+    </div>
   );
 };
