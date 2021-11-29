@@ -1,3 +1,4 @@
+import Box from "@material-ui/core/Box/Box";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem/ListItem";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
@@ -16,7 +17,13 @@ export const SearchResultsList = ({ data, handleResultSelect }: Props) => {
 
   const { results, search } = data;
 
-  if (results === null) return <p>Ticker not found</p>;
+  if (results === null) {
+    return (
+      <Box mt={3} textAlign='center' fontSize='18px'>
+        No Results Found
+      </Box>
+    );
+  }
 
   return (
     <List aria-label='ticker symbol and company name' classes={classes}>
