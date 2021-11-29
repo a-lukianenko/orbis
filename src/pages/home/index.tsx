@@ -9,6 +9,7 @@ import Box from "@material-ui/core/Box/Box";
 import { Description } from "./components/TickerDetails/Description";
 import { AddressMap } from "./components/TickerDetails/AddressMap";
 import { RelatedStocks } from "./components/TickerDetails/RelatedStocks";
+import { Tags } from "./components/TickerDetails/Tags";
 
 export type SearchResults = {
   results: Ticker[] | null;
@@ -90,6 +91,8 @@ export const HomePage = () => {
           <Description description={tickerDetails.description} />
 
           <RelatedStocks relatedStocks={tickerDetails.similar} />
+
+          <Tags tags={tickerDetails.tags} />
         </Box>
       )}
     </main>

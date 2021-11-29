@@ -15,4 +15,5 @@ type TickerDetails = {
   phone: string;
   description: string;
   similar: string[];
+  tags: string[];
 };
