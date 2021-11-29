@@ -1,6 +1,6 @@
 import TextField from "@material-ui/core/TextField";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { useTextFieldStyles } from "./styles";
+import { useStyles } from "./styles";
 import { handleAxiosError } from "api/httpClient";
 import axios from "axios";
 import { getTickers } from "api/getTickers";
@@ -16,10 +16,11 @@ type Props = {
 };
 
 export const SearchBar = ({ isSearchSelected, handleSearchresults }: Props) => {
-  const classesTextField = useTextFieldStyles();
+  const classesTextField = useStyles();
 
   // `tickerName` stands for ticker symbol and company name
   const [tickerName, setTickerName] = useState("");
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTickerName(event.target.value);
   };

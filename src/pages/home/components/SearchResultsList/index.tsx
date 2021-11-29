@@ -3,7 +3,7 @@ import ListItem from "@material-ui/core/ListItem/ListItem";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import { SearchResults } from "pages/home";
 import { highlightMatch } from "utils/highlightMatch";
-import { useHighlightStyles } from "./styles";
+import { useTextStyles, useListStyles } from "./styles";
 
 type Props = {
   data: SearchResults;
@@ -11,14 +11,15 @@ type Props = {
 };
 
 export const SearchResultsList = ({ data, handleResultSelect }: Props) => {
-  const { highlight } = useHighlightStyles();
+  const { highlight } = useTextStyles();
+  const classes = useListStyles();
 
   const { results, search } = data;
 
   if (results === null) return <p>Ticker not found</p>;
 
   return (
-    <List aria-label='ticker symbol and company name'>
+    <List aria-label='ticker symbol and company name' classes={classes}>
       {Array.isArray(results) &&
         results.map(({ ticker, name }) => {
           return (

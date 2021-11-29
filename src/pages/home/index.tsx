@@ -41,10 +41,10 @@ export const HomePage = () => {
     []
   );
 
-  const handleTickerSelect = useCallback(
-    (ticker: string) => setSelectedTicker(ticker),
-    []
-  );
+  const handleTickerSelect = useCallback((ticker: string) => {
+    setSelectedTicker(ticker);
+    setSearchResults(initialState);
+  }, []);
 
   const { results } = searchResults;
 
@@ -83,13 +83,12 @@ export const HomePage = () => {
         isSearchSelected={Boolean(selectedTicker)}
       />
 
-      {((Array.isArray(results) && results.length > 0) || results === null) &&
-        !selectedTicker && (
-          <SearchResultsList
-            data={searchResults}
-            handleResultSelect={handleTickerSelect}
-          />
-        )}
+      {(results === null || results?.length > 0) && (
+        <SearchResultsList
+          data={searchResults}
+          handleResultSelect={handleTickerSelect}
+        />
+      )}
 
       {tickerDetails && (
         <Box py='30px' px='45px'>
