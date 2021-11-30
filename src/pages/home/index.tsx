@@ -1,12 +1,12 @@
-import { TickerTitle } from "./components/TickerDetails/TickerTitle";
-import { AboutTicker } from "./components/TickerDetails/AboutTicker";
+import { TickerTitle } from "./TickerDetails/TickerTitle";
+import { AboutTicker } from "./TickerDetails/AboutTicker";
 import Box from "@material-ui/core/Box/Box";
-import { Description } from "./components/TickerDetails/Description";
-import { AddressMap } from "./components/TickerDetails/AddressMap";
-import { RelatedStocks } from "./components/TickerDetails/RelatedStocks";
-import { Tags } from "./components/TickerDetails/Tags";
-import { TickerPrice } from "./components/TickerDetails/TickerPrice";
-import { AggregatesChart } from "./components/TickerDetails/AggregatesChart";
+import { Description } from "./TickerDetails/Description";
+import { AddressMap } from "./TickerDetails/AddressMap";
+import { RelatedStocks } from "./TickerDetails/RelatedStocks";
+import { Tags } from "./TickerDetails/Tags";
+import { TickerPrice } from "./TickerDetails/TickerPrice";
+import { AggregatesChart } from "./TickerDetails/AggregatesChart";
 import Grid from "@material-ui/core/Grid/Grid";
 
 export const HomePage = ({
