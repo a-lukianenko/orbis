@@ -30,13 +30,17 @@ export const AboutTicker = ({
   const title = `About ${symbol}`;
 
   return (
-    <Box component='section' mt={2}>
-      <SectionTitle>{title}</SectionTitle>
+    <Box component='section'>
+      <Box component='h3' fontSize='18px' fontWeight='bold' mt='-50px'>
+        {title}
+      </Box>
 
-      <Box mt={2} display='flex' justifyContent='space-between' width='50%'>
+      <Box mt={2} display='flex' justifyContent='space-between' width='100%'>
         <GeneralInfo {...generalInfoProps} />
 
-        <Address {...addressProps} />
+        <Box ml='70px'>
+          <Address {...addressProps} />
+        </Box>
       </Box>
     </Box>
   );

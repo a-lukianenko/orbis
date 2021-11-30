@@ -12,8 +12,7 @@ export const AddressMap = ({ address }: Props) => {
       </Box>
       <iframe
         src={`https://www.google.com/maps?q=${URIencoded}&output=embed`}
-        width='508'
-        height='164'
+        width='100%'
         style={{ border: 0 }}
         title='address'
       ></iframe>

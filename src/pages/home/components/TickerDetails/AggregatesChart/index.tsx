@@ -7,7 +7,7 @@ type Props = {
 
 export const AggregatesChart = ({ data }: Props) => (
   <Box component='section' mt='10px'>
-    <ResponsiveContainer width='70%' height={330}>
+    <ResponsiveContainer width='100%' height={330}>
       <LineChart width={400} height={400} data={data}>
         <Line
           type='monotone'

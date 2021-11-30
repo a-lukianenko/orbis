@@ -1,4 +1,3 @@
-import { useStyles } from "./styles";
 import { TickerTitle } from "./components/TickerDetails/TickerTitle";
 import { AboutTicker } from "./components/TickerDetails/AboutTicker";
 import Box from "@material-ui/core/Box/Box";
@@ -8,6 +7,7 @@ import { RelatedStocks } from "./components/TickerDetails/RelatedStocks";
 import { Tags } from "./components/TickerDetails/Tags";
 import { TickerPrice } from "./components/TickerDetails/TickerPrice";
 import { AggregatesChart } from "./components/TickerDetails/AggregatesChart";
+import Grid from "@material-ui/core/Grid/Grid";
 
 export const HomePage = ({
   tickerDetails,
@@ -16,44 +16,71 @@ export const HomePage = ({
   tickerDetails: any;
   handleTickerSelect: (t: string) => void;
 }) => {
-  const { main } = useStyles();
-
   return (
-    <div className={main}>
+    <Box width='100%'>
       {tickerDetails && (
-        <Box py='30px' px='45px'>
-          <TickerTitle
-            symbol={tickerDetails.symbol}
-            name={tickerDetails.name}
-          />
+        <Box p={{ xs: "20px", sm: "30px 45px" }}>
+          <Grid container direction='column'>
+            <Grid item>
+              <TickerTitle
+                symbol={tickerDetails.symbol}
+                name={tickerDetails.name}
+              />
 
-          <TickerPrice open={tickerDetails.open} close={tickerDetails.close} />
+              <TickerPrice
+                open={tickerDetails.open}
+                close={tickerDetails.close}
+              />
+            </Grid>
 
-          <AboutTicker
-            symbol={tickerDetails.symbol}
-            sector={tickerDetails.sector}
-            industry={tickerDetails.industry}
-            ceo={tickerDetails.ceo}
-            employees={tickerDetails.employees}
-            hq_address={tickerDetails.hq_address}
-            hq_country={tickerDetails.hq_country}
-            phone={tickerDetails.phone}
-          />
+            <Grid item xs={12} md={10}>
+              <AggregatesChart data={tickerDetails.aggregates} />
+            </Grid>
+          </Grid>
 
-          <AggregatesChart data={tickerDetails.aggregates} />
+          <Grid container direction='column'>
+            <Grid item container justifyContent='space-between' spacing={5}>
+              <Grid item md={6}>
+                <AboutTicker
+                  symbol={tickerDetails.symbol}
+                  sector={tickerDetails.sector}
+                  industry={tickerDetails.industry}
+                  ceo={tickerDetails.ceo}
+                  employees={tickerDetails.employees}
+                  hq_address={tickerDetails.hq_address}
+                  hq_country={tickerDetails.hq_country}
+                  phone={tickerDetails.phone}
+                />
+              </Grid>
 
-          <AddressMap address={tickerDetails.hq_address} />
+              <Grid item xs={12} md={6}>
+                <AddressMap address={tickerDetails.hq_address} />
+              </Grid>
+            </Grid>
 
-          <Description description={tickerDetails.description} />
+            <Grid
+              item
+              container
+              direction='row'
+              justifyContent='space-between'
+              spacing={5}
+            >
+              <Grid item md={6}>
+                <Description description={tickerDetails.description} />
+              </Grid>
 
-          <RelatedStocks
-            relatedStocks={tickerDetails.similar}
-            handleTickerSelect={handleTickerSelect}
-          />
+              <Grid item md={6}>
+                <RelatedStocks
+                  relatedStocks={tickerDetails.similar}
+                  handleTickerSelect={handleTickerSelect}
+                />
 
-          <Tags tags={tickerDetails.tags} />
+                <Tags tags={tickerDetails.tags} />
+              </Grid>
+            </Grid>
+          </Grid>
         </Box>
       )}
-    </div>
+    </Box>
   );
 };
