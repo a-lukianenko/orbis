@@ -4,7 +4,7 @@ import ListItem from "@material-ui/core/ListItem/ListItem";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import { SearchResults } from "components/Layout";
 import { highlightMatch } from "utils/highlightMatch";
-import { useTextStyles, useListStyles } from "./styles";
+import { useTextStyles, useListStyles, useListItemStyles } from "./styles";
 
 type Props = {
   data: SearchResults;
@@ -14,6 +14,7 @@ type Props = {
 export const SearchResultsList = ({ data, handleResultSelect }: Props) => {
   const { highlight } = useTextStyles();
   const classes = useListStyles();
+  const liClasses = useListItemStyles();
 
   const { results, search } = data;
 
@@ -39,10 +40,13 @@ export const SearchResultsList = ({ data, handleResultSelect }: Props) => {
           return (
             <ListItem
               key={ticker}
+              classes={liClasses}
               button
               onClick={() => handleResultSelect(ticker)}
             >
-              <ListItemText>{ticker}</ListItemText>
+              <ListItemText>
+                {search ? highlightMatch(ticker, search, highlight) : ticker}
+              </ListItemText>
               <ListItemText>
                 {search ? highlightMatch(name, search, highlight) : name}
               </ListItemText>
