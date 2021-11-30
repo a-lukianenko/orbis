@@ -1,4 +1,4 @@
-import { UserPic } from "components/UserPic";
+import { UserPic } from "components/Layout/UserPic";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Drawer from "@material-ui/core/Drawer";
@@ -9,8 +9,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import { useTheme } from "@material-ui/core/styles";
 import { ReactNode, useCallback, useEffect, useState } from "react";
-import { SearchBar } from "components/SearchBar";
-import { SearchResultsList } from "./components/SearchResultsList";
+import { SearchBar } from "components/Layout/SearchBar";
+import { SearchResultsList } from "./SearchResultsList";
 import { getPriceAggregates } from "api/getPriceAggregates";
 import { getTickerPrice } from "api/getTickerPrice";
 import { getTickerDetails } from "api/getTickerDetails";
