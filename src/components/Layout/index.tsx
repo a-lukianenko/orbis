@@ -8,14 +8,14 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import { useTheme } from "@material-ui/core/styles";
-import { ReactNode, useCallback, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { SearchBar } from "components/Layout/SearchBar";
 import { SearchResultsList } from "./SearchResultsList";
 import { getPriceAggregates } from "api/getPriceAggregates";
 import { getTickerPrice } from "api/getTickerPrice";
 import { getTickerDetails } from "api/getTickerDetails";
-import { HomePage } from "pages/home";
 import { useStyles } from "./styles";
+import { useTickerDispatch, useTickerState } from "context";
 
 type Props = {
   children?: ReactNode;
@@ -26,11 +26,6 @@ export type SearchResults = {
   search: string;
 };
 
-const initialState = {
-  results: [],
-  search: "",
-} as SearchResults;
-
 export const Layout = ({ children }: Props) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -40,25 +35,8 @@ export const Layout = ({ children }: Props) => {
     setMobileOpen(!mobileOpen);
   };
 
-  const [searchResults, setSearchResults] =
-    useState<SearchResults>(initialState);
-
-  const [selectedTicker, setSelectedTicker] = useState("");
-  const [tickerDetails, setTickerDetails] = useState<
-    (TickerDetails & TickerPrice & { aggregates: PriceAggregate[] }) | null
-  >(null);
-
-  const handleSearchresults = useCallback(
-    (results) => setSearchResults(results),
-    []
-  );
-
-  const handleTickerSelect = useCallback((ticker: string) => {
-    setSelectedTicker(ticker);
-    setSearchResults(initialState);
-  }, []);
-
-  const { results } = searchResults;
+  const { searchResults, ticker: selectedTicker } = useTickerState();
+  const dispatch = useTickerDispatch();
 
   useEffect(() => {
     const requestTickerDetails = async () => {
@@ -81,12 +59,13 @@ export const Layout = ({ children }: Props) => {
           aggregates: aggregatesRes.data.results,
         };
 
-        setTickerDetails(tickerDetails);
+        dispatch({ type: "setTickerDetails", payload: tickerDetails });
       } catch (error) {}
     };
 
-    if (selectedTicker !== "") requestTickerDetails();
-  }, [selectedTicker]);
+    if (selectedTicker !== "" && selectedTicker !== null)
+      requestTickerDetails();
+  }, [dispatch, selectedTicker]);
 
   return (
     <div className={classes.root}>
@@ -103,16 +82,11 @@ export const Layout = ({ children }: Props) => {
             <MenuIcon />
           </IconButton>
 
-          <SearchBar
-            isSearchSelected={Boolean(selectedTicker)}
-            handleSearchresults={handleSearchresults}
-          />
+          <SearchBar isSearchSelected={Boolean(selectedTicker)} />
 
-          {(results === null || results?.length > 0) && (
-            <SearchResultsList
-              data={searchResults}
-              handleResultSelect={handleTickerSelect}
-            />
+          {(searchResults.results === null ||
+            searchResults.results?.length > 0) && (
+            <SearchResultsList data={searchResults} />
           )}
         </Toolbar>
       </AppBar>
@@ -148,12 +122,7 @@ export const Layout = ({ children }: Props) => {
         </Hidden>
       </nav>
 
-      <main className={classes.content}>
-        <HomePage
-          tickerDetails={tickerDetails}
-          handleTickerSelect={handleTickerSelect}
-        />
-      </main>
+      <main className={classes.content}>{children}</main>
     </div>
   );
 };

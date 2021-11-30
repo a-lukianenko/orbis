@@ -8,13 +8,13 @@ type Props = {
 
 export const GeneralInfoCategory = ({ category, value }: Props) => {
   return (
-    <Box>
+    <div>
       <Typography display='inline' variant='body1'>
         {category}:
       </Typography>
       <Box component='span' ml='5px' fontSize={16} fontWeight='bold'>
         {value}
       </Box>
-    </Box>
+    </div>
   );
 };

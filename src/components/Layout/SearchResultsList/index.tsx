@@ -3,20 +3,26 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem/ListItem";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import { SearchResults } from "components/Layout";
+import { useTickerDispatch } from "context";
 import { highlightMatch } from "utils/highlightMatch";
 import { useTextStyles, useListStyles, useListItemStyles } from "./styles";
 
 type Props = {
   data: SearchResults;
-  handleResultSelect: (ticker: string) => void;
 };
 
-export const SearchResultsList = ({ data, handleResultSelect }: Props) => {
+export const SearchResultsList = ({ data }: Props) => {
   const { highlight } = useTextStyles();
   const classes = useListStyles();
   const liClasses = useListItemStyles();
 
+  const dispatch = useTickerDispatch();
+
   const { results, search } = data;
+
+  const handleTickerSelect = (ticker: string) => {
+    dispatch({ type: "setTicker", payload: ticker });
+  };
 
   if (results === null) {
     return (
@@ -42,7 +48,7 @@ export const SearchResultsList = ({ data, handleResultSelect }: Props) => {
               key={ticker}
               classes={liClasses}
               button
-              onClick={() => handleResultSelect(ticker)}
+              onClick={() => handleTickerSelect(ticker)}
             >
               <ListItemText>
                 {search ? highlightMatch(ticker, search, highlight) : ticker}

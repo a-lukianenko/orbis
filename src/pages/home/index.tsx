@@ -8,14 +8,11 @@ import { Tags } from "./TickerDetails/Tags";
 import { TickerPrice } from "./TickerDetails/TickerPrice";
 import { AggregatesChart } from "./TickerDetails/AggregatesChart";
 import Grid from "@material-ui/core/Grid/Grid";
+import { useTickerState } from "context";
 
-export const HomePage = ({
-  tickerDetails,
-  handleTickerSelect,
-}: {
-  tickerDetails: any;
-  handleTickerSelect: (t: string) => void;
-}) => {
+export const HomePage = () => {
+  const { tickerDetails } = useTickerState();
+
   return (
     <Box width='100%'>
       {tickerDetails && (
@@ -70,10 +67,7 @@ export const HomePage = ({
               </Grid>
 
               <Grid item md={6}>
-                <RelatedStocks
-                  relatedStocks={tickerDetails.similar}
-                  handleTickerSelect={handleTickerSelect}
-                />
+                <RelatedStocks relatedStocks={tickerDetails.similar} />
 
                 <Tags tags={tickerDetails.tags} />
               </Grid>

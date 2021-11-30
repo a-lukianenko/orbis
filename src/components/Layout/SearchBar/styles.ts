@@ -5,6 +5,5 @@ export const useStyles = makeStyles({
     marginTop: 10,
     paddingLeft: 15,
     paddingBottom: 5,
-    // borderBottom: "1px solid #E9ECF4",
   },
 });

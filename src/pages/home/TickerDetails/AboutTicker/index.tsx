@@ -1,5 +1,4 @@
 import Box from "@material-ui/core/Box/Box";
-import { SectionTitle } from "../SectionTitle";
 import { Address } from "./Address";
 import { GeneralInfo } from "./GeneralInfo";
 

@@ -6,17 +6,16 @@ import axios from "axios";
 import { getTickers } from "api/getTickers";
 import { useDebouncedCallback } from "../../../hooks/useDebouncedCallback";
 import { Adornment } from "./components/Adornment";
+import { useTickerDispatch } from "context";
 
 type Props = {
   isSearchSelected: boolean;
-  handleSearchresults: (res: {
-    results: Ticker[] | null;
-    search: string;
-  }) => void;
 };
 
-export const SearchBar = ({ isSearchSelected, handleSearchresults }: Props) => {
+export const SearchBar = ({ isSearchSelected }: Props) => {
   const classesTextField = useStyles();
+
+  const dispatch = useTickerDispatch();
 
   // `tickerName` stands for ticker symbol and company name
   const [tickerName, setTickerName] = useState("");
@@ -27,7 +26,10 @@ export const SearchBar = ({ isSearchSelected, handleSearchresults }: Props) => {
 
   const requestTickers = useCallback(async () => {
     if (tickerName === "") {
-      return handleSearchresults({ results: [], search: "" });
+      return dispatch({
+        type: "setSearchResults",
+        payload: { results: [], search: "" },
+      });
     }
 
     try {
@@ -37,7 +39,10 @@ export const SearchBar = ({ isSearchSelected, handleSearchresults }: Props) => {
         data: { results },
       } = response;
 
-      handleSearchresults({ results, search: tickerName });
+      return dispatch({
+        type: "setSearchResults",
+        payload: { results, search: tickerName },
+      });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         return handleAxiosError(error);
@@ -47,7 +52,7 @@ export const SearchBar = ({ isSearchSelected, handleSearchresults }: Props) => {
         console.log(error.message);
       }
     }
-  }, [handleSearchresults, tickerName]);
+  }, [dispatch, tickerName]);
 
   useDebouncedCallback(requestTickers);
 
