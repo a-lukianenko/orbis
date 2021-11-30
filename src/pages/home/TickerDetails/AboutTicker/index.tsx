@@ -2,7 +2,7 @@ import Box from "@material-ui/core/Box/Box";
 import { Address } from "./Address";
 import { GeneralInfo } from "./GeneralInfo";
 
-type Props = Pick<
+export type AboutTickerProps = Pick<
   TickerDetails,
   | "symbol"
   | "sector"
@@ -14,7 +14,7 @@ type Props = Pick<
   | "phone"
 >;
 
-export const AboutTicker = ({
+export const AboutTicker = <T extends AboutTickerProps>({
   symbol,
   sector,
   industry,
@@ -23,7 +23,7 @@ export const AboutTicker = ({
   hq_address,
   hq_country,
   phone,
-}: Props) => {
+}: T) => {
   const generalInfoProps = { sector, industry, ceo, employees };
   const addressProps = { hq_address, hq_country, phone };
   const title = `About ${symbol}`;

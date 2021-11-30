@@ -3,11 +3,9 @@ import { useTickerDispatch } from "context";
 import { theme } from "theme";
 import { SectionTitle } from "../SectionTitle";
 
-type Props = {
-  relatedStocks: string[];
-};
+export type RelatedStocksProps = Pick<TickerDetails, "similar">;
 
-export const RelatedStocks = ({ relatedStocks }: Props) => {
+export const RelatedStocks = <T extends RelatedStocksProps>({ similar }: T) => {
   const dispatch = useTickerDispatch();
 
   const handleTickerSelect = (ticker: string) =>
@@ -16,7 +14,7 @@ export const RelatedStocks = ({ relatedStocks }: Props) => {
   return (
     <section>
       <SectionTitle>Related Stocks</SectionTitle>
-      {relatedStocks.map((stock, i) => {
+      {similar.map((stock, i) => {
         return (
           <Button
             key={stock}

@@ -1,17 +1,18 @@
 import { createContext, ReactNode, useContext, useReducer } from "react";
 
-type SelectedTickerDetails = TickerDetails &
-  TickerPrice & { aggregates: PriceAggregate[] };
-
 type Action =
-  | { type: "setSearchResults"; payload: { results: Ticker[]; search: string } }
+  | {
+      type: "setSearchResults";
+      payload: { results: Ticker[] | null; search: string };
+    }
   | { type: "setTicker"; payload: string }
-  | { type: "setTickerDetails"; payload: SelectedTickerDetails | null };
+  | { type: "setTickerDetails"; payload: SelectedTickerDetails | null }
+  | { type: "setError"; payload: string };
 
 type Dispatch = (action: Action) => void;
 
 type State = {
-  ticker: any;
+  ticker: string | null;
   tickerDetails: SelectedTickerDetails | null;
   error: string | null;
   searchResults: { results: Ticker[] | null; search: string };
@@ -53,6 +54,12 @@ function tickerReducer(state: State, action: Action) {
       return {
         ...state,
         tickerDetails: action.payload,
+      };
+    }
+    case "setError": {
+      return {
+        ...state,
+        error: action.payload,
       };
     }
     default: {

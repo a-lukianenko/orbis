@@ -1,9 +1,12 @@
 import Typography from "@material-ui/core/Typography/Typography";
 import { useStyles } from "./styles";
 
-type Props = Pick<TickerDetails, "symbol" | "name">;
+export type TickerTitleProps = Pick<TickerDetails, "symbol" | "name">;
 
-export const TickerTitle = ({ symbol, name }: Props) => {
+export const TickerTitle = <T extends TickerTitleProps>({
+  symbol,
+  name,
+}: T) => {
   const { symbol: symbolStyle, name: nameStyle } = useStyles();
 
   return (

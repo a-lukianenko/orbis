@@ -26,3 +26,11 @@ type TickerPrice = {
 type PriceAggregate = {
   c: number;
 };
+
+type SelectedTickerDetails = {
+  details: TickerDetails | Error;
+  price: TickerPrice | Error;
+  aggregates: PriceAggregate[] | Error;
+};
+// TickerDetails &
+// TickerPrice & { aggregates: PriceAggregate[] };

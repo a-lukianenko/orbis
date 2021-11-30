@@ -39,32 +39,49 @@ export const Layout = ({ children }: Props) => {
   const dispatch = useTickerDispatch();
 
   useEffect(() => {
-    const requestTickerDetails = async () => {
+    const requestTickerDetails = async (selectedTicker: string) => {
       try {
-        const [detailsRes, priceRes, aggregatesRes] = await Promise.all([
+        const [detailsRes, priceRes, aggregatesRes] = await Promise.allSettled([
           getTickerDetails(selectedTicker),
           getTickerPrice(selectedTicker),
           getPriceAggregates(selectedTicker),
         ]);
 
-        const { data: details } = detailsRes;
-        const {
-          data: { open, close },
-        } = priceRes;
+        const details =
+          ((detailsRes as PromiseRejectedResult)?.reason as Error) ||
+          (detailsRes as PromiseFulfilledResult<{ data: TickerDetails }>).value
+            .data;
+
+        const price =
+          ((priceRes as PromiseRejectedResult)?.reason as Error) ||
+          (priceRes as PromiseFulfilledResult<{ data: TickerPrice }>).value
+            .data;
+
+        const aggregates =
+          ((aggregatesRes as PromiseRejectedResult)?.reason as Error) ||
+          (
+            aggregatesRes as PromiseFulfilledResult<{
+              data: { results: PriceAggregate[] };
+            }>
+          ).value.data.results;
 
         const tickerDetails = {
-          ...details,
-          open,
-          close,
-          aggregates: aggregatesRes.data.results,
+          details,
+          price,
+          aggregates,
         };
 
         dispatch({ type: "setTickerDetails", payload: tickerDetails });
-      } catch (error) {}
+        dispatch({
+          type: "setSearchResults",
+          payload: { results: [], search: "" },
+        });
+      } catch (error) {
+        console.log({ error });
+      }
     };
 
-    if (selectedTicker !== "" && selectedTicker !== null)
-      requestTickerDetails();
+    if (selectedTicker !== null) requestTickerDetails(selectedTicker);
   }, [dispatch, selectedTicker]);
 
   return (

@@ -8,13 +8,11 @@ import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import { useStyles } from "./styles";
 import { SectionTitle } from "../SectionTitle";
 
-type Props = {
-  description: string;
-};
+export type DescriptionProps = Pick<TickerDetails, "description">;
 
 const COLLAPSED_SIZE = 50;
 
-export const Description = ({ description }: Props) => {
+export const Description = <T extends DescriptionProps>({ description }: T) => {
   const [checked, setChecked] = useState(true);
   const [showCollapseToggler, setShowCollapseToggler] = useState(true);
   const ref = useRef<HTMLParagraphElement | null>(null);

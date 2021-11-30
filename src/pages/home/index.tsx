@@ -1,80 +1,120 @@
-import { TickerTitle } from "./TickerDetails/TickerTitle";
-import { AboutTicker } from "./TickerDetails/AboutTicker";
+import { TickerTitle, TickerTitleProps } from "./TickerDetails/TickerTitle";
+import { AboutTicker, AboutTickerProps } from "./TickerDetails/AboutTicker";
 import Box from "@material-ui/core/Box/Box";
-import { Description } from "./TickerDetails/Description";
-import { AddressMap } from "./TickerDetails/AddressMap";
-import { RelatedStocks } from "./TickerDetails/RelatedStocks";
-import { Tags } from "./TickerDetails/Tags";
+import { Description, DescriptionProps } from "./TickerDetails/Description";
+import { AddressMap, AddressMapProps } from "./TickerDetails/AddressMap";
+import {
+  RelatedStocks,
+  RelatedStocksProps,
+} from "./TickerDetails/RelatedStocks";
+import { Tags, TagsProps } from "./TickerDetails/Tags";
 import { TickerPrice } from "./TickerDetails/TickerPrice";
 import { AggregatesChart } from "./TickerDetails/AggregatesChart";
 import Grid from "@material-ui/core/Grid/Grid";
 import { useTickerState } from "context";
+import { ComponentType } from "react";
+
+const ErrorMessage = ({ error }: { error: string | Error }) => {
+  return (
+    <Box mt='20px' mb='70px' fontSize='30px'>
+      {typeof error === "string"
+        ? error
+        : error.message && error.message.includes("429")
+        ? "5 requests limit - try 1 minute later!"
+        : "an error occurred. please, try again later"}
+    </Box>
+  );
+};
+
+function WithFallback<T>({
+  data,
+  Component,
+}: {
+  data: Error | T;
+  Component: ComponentType<T>;
+}) {
+  return (
+    <>
+      {data instanceof Error ? (
+        <ErrorMessage error={data} />
+      ) : (
+        <Component {...data} />
+      )}
+    </>
+  );
+}
 
 export const HomePage = () => {
   const { tickerDetails } = useTickerState();
 
+  if (tickerDetails === null) return null;
+
+  const { details, price, aggregates } = tickerDetails;
+
   return (
     <Box width='100%'>
-      {tickerDetails && (
-        <Box p={{ xs: "20px", sm: "30px 45px" }}>
-          <Grid container direction='column'>
-            <Grid item>
-              <TickerTitle
-                symbol={tickerDetails.symbol}
-                name={tickerDetails.name}
-              />
+      <Box p={{ xs: "20px", sm: "30px 45px" }}>
+        <Grid container direction='column'>
+          <Grid item>
+            <WithFallback<TickerTitleProps>
+              data={details}
+              Component={TickerTitle}
+            />
 
-              <TickerPrice
-                open={tickerDetails.open}
-                close={tickerDetails.close}
+            <WithFallback<TickerPrice> data={price} Component={TickerPrice} />
+          </Grid>
+
+          <Grid item xs={12} md={10}>
+            {typeof aggregates === "string" || aggregates instanceof Error ? (
+              <ErrorMessage error={aggregates} />
+            ) : (
+              <AggregatesChart data={aggregates as PriceAggregate[]} />
+            )}
+          </Grid>
+        </Grid>
+
+        <Grid container direction='column'>
+          <Grid item container justifyContent='space-between' spacing={5}>
+            <Grid item md={6}>
+              <WithFallback<AboutTickerProps>
+                data={details}
+                Component={AboutTicker}
               />
             </Grid>
 
-            <Grid item xs={12} md={10}>
-              <AggregatesChart data={tickerDetails.aggregates} />
+            <Grid item xs={12} md={6}>
+              <WithFallback<AddressMapProps>
+                data={details}
+                Component={AddressMap}
+              />
             </Grid>
           </Grid>
 
-          <Grid container direction='column'>
-            <Grid item container justifyContent='space-between' spacing={5}>
-              <Grid item md={6}>
-                <AboutTicker
-                  symbol={tickerDetails.symbol}
-                  sector={tickerDetails.sector}
-                  industry={tickerDetails.industry}
-                  ceo={tickerDetails.ceo}
-                  employees={tickerDetails.employees}
-                  hq_address={tickerDetails.hq_address}
-                  hq_country={tickerDetails.hq_country}
-                  phone={tickerDetails.phone}
-                />
-              </Grid>
-
-              <Grid item xs={12} md={6}>
-                <AddressMap address={tickerDetails.hq_address} />
-              </Grid>
+          <Grid
+            item
+            container
+            direction='row'
+            justifyContent='space-between'
+            spacing={5}
+          >
+            <Grid item md={6}>
+              <WithFallback<DescriptionProps>
+                data={details}
+                Component={Description}
+              />
             </Grid>
 
-            <Grid
-              item
-              container
-              direction='row'
-              justifyContent='space-between'
-              spacing={5}
-            >
-              <Grid item md={6}>
-                <Description description={tickerDetails.description} />
-              </Grid>
+            <Grid item md={6}>
+              <WithFallback<RelatedStocksProps>
+                data={details}
+                Component={RelatedStocks}
+              />
 
-              <Grid item md={6}>
-                <RelatedStocks relatedStocks={tickerDetails.similar} />
-
-                <Tags tags={tickerDetails.tags} />
-              </Grid>
+              <WithFallback<TagsProps> data={details} Component={Tags} />
             </Grid>
           </Grid>
-        </Box>
-      )}
+        </Grid>
+      </Box>
     </Box>
   );
 };

@@ -4,7 +4,7 @@ import { theme } from "theme";
 const arrowDown = <>&darr;</>;
 const arrowUp = <>&uarr;</>;
 
-export const TickerPrice = ({ open, close }: TickerPrice) => {
+export const TickerPrice = <T extends TickerPrice>({ open, close }: T) => {
   const priceDiff = {
     asNumber: Number((close - open).toFixed(2)),
     asPercentage: Number((((close - open) / open) * 100).toFixed(2)),

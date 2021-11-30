@@ -2,9 +2,9 @@ import Button from "@material-ui/core/Button/Button";
 import { theme } from "theme";
 import { SectionTitle } from "../SectionTitle";
 
-type Props = Pick<TickerDetails, "tags">;
+export type TagsProps = Pick<TickerDetails, "tags">;
 
-export const Tags = ({ tags }: Props) => {
+export const Tags = <T extends TagsProps>({ tags }: T) => {
   return (
     <section>
       <SectionTitle>Tags</SectionTitle>

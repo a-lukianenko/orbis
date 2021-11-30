@@ -1,8 +1,7 @@
 import TextField from "@material-ui/core/TextField";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { useStyles } from "./styles";
-import { handleAxiosError } from "api/httpClient";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { getTickers } from "api/getTickers";
 import { useDebouncedCallback } from "../../../hooks/useDebouncedCallback";
 import { Adornment } from "./components/Adornment";
@@ -33,7 +32,8 @@ export const SearchBar = ({ isSearchSelected }: Props) => {
     }
 
     try {
-      const response = await getTickers(tickerName);
+      const response: AxiosResponse<{ results: Ticker[] | null }> =
+        await getTickers(tickerName);
 
       const {
         data: { results },
@@ -45,11 +45,13 @@ export const SearchBar = ({ isSearchSelected }: Props) => {
       });
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        return handleAxiosError(error);
+        return dispatch({
+          type: "setError",
+          payload: error?.response?.data || "error",
+        });
       }
-
       if (error instanceof Error) {
-        console.log(error.message);
+        dispatch({ type: "setError", payload: error.message });
       }
     }
   }, [dispatch, tickerName]);

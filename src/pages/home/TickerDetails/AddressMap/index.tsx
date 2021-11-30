@@ -1,9 +1,9 @@
 import Box from "@material-ui/core/Box/Box";
 
-type Props = { address: string };
+export type AddressMapProps = Pick<TickerDetails, "hq_address">;
 
-export const AddressMap = ({ address }: Props) => {
-  const URIencoded = encodeURI(address);
+export const AddressMap = <T extends AddressMapProps>({ hq_address }: T) => {
+  const URIencoded = encodeURI(hq_address);
 
   return (
     <section>
