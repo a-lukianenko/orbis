@@ -69,7 +69,6 @@ function tickerReducer(state: State, action: Action) {
 }
 
 function TickerProvider({ children }: TickerProviderProps) {
-  // @ts-ignore
   const [state, dispatch] = useReducer(tickerReducer, initialState);
 
   return (

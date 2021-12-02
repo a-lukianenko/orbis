@@ -32,5 +32,3 @@ type SelectedTickerDetails = {
   price: TickerPrice | Error;
   aggregates: PriceAggregate[] | Error;
 };
-// TickerDetails &
-// TickerPrice & { aggregates: PriceAggregate[] };
