@@ -14,7 +14,6 @@ export const Tags = <T extends TagsProps>({ tags }: T) => {
         return (
           <Button
             key={tag}
-            size='small'
             style={{
               marginRight: 20,
               color: "#fff",

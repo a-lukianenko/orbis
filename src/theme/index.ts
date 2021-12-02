@@ -15,4 +15,9 @@ export const theme = createTheme({
       main: "#58D38C",
     },
   },
+  props: {
+    MuiButton: {
+      size: "small",
+    },
+  },
 });

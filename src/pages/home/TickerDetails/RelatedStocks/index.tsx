@@ -20,7 +20,6 @@ export const RelatedStocks = <T extends RelatedStocksProps>({ similar }: T) => {
         return (
           <Button
             key={stock}
-            size='small'
             style={{
               marginRight: 20,
               color: "#fff",
