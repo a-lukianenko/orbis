@@ -1,5 +1,7 @@
 import Button from "@material-ui/core/Button/Button";
+
 import { theme } from "theme";
+
 import { SectionTitle } from "../SectionTitle";
 
 export type TagsProps = Pick<TickerDetails, "tags">;

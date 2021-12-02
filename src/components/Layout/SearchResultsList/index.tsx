@@ -2,6 +2,7 @@ import Box from "@material-ui/core/Box/Box";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem/ListItem";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
+
 import { SearchResults } from "components/Layout";
 import { useTickerDispatch } from "context";
 import { highlightMatch } from "utils/highlightMatch";

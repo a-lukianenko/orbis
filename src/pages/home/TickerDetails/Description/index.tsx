@@ -1,10 +1,12 @@
+import { useLayoutEffect, useRef, useState } from "react";
+
 import Box from "@material-ui/core/Box/Box";
 import Typography from "@material-ui/core/Typography/Typography";
 import Collapse from "@material-ui/core/Collapse";
 import Button from "@material-ui/core/Button/Button";
-import { useLayoutEffect, useRef, useState } from "react";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
+
 import { useStyles } from "./styles";
 import { SectionTitle } from "../SectionTitle";
 

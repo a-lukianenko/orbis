@@ -1,11 +1,12 @@
-import TextField from "@material-ui/core/TextField";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { useStyles } from "./styles";
 import axios, { AxiosResponse } from "axios";
-import { getTickers } from "api/getTickers";
-import { useDebouncedCallback } from "../../../hooks/useDebouncedCallback";
-import { Adornment } from "./components/Adornment";
+import TextField from "@material-ui/core/TextField";
+
 import { useTickerDispatch } from "context";
+import { getTickers } from "api/getTickers";
+import { useStyles } from "./styles";
+import { Adornment } from "./components/Adornment";
+import { useDebouncedCallback } from "hooks/useDebouncedCallback";
 
 type Props = {
   isSearchSelected: boolean;

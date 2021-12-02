@@ -1,4 +1,5 @@
 import Typography from "@material-ui/core/Typography/Typography";
+
 import { useStyles } from "./styles";
 
 export type TickerTitleProps = Pick<TickerDetails, "symbol" | "name">;

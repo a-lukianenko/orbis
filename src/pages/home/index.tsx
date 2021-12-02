@@ -1,6 +1,12 @@
+import { ComponentType } from "react";
+
+import Grid from "@material-ui/core/Grid/Grid";
+import Box from "@material-ui/core/Box/Box";
+
+import { useTickerState } from "context";
+
 import { TickerTitle, TickerTitleProps } from "./TickerDetails/TickerTitle";
 import { AboutTicker, AboutTickerProps } from "./TickerDetails/AboutTicker";
-import Box from "@material-ui/core/Box/Box";
 import { Description, DescriptionProps } from "./TickerDetails/Description";
 import { AddressMap, AddressMapProps } from "./TickerDetails/AddressMap";
 import {
@@ -10,9 +16,6 @@ import {
 import { Tags, TagsProps } from "./TickerDetails/Tags";
 import { TickerPrice } from "./TickerDetails/TickerPrice";
 import { AggregatesChart } from "./TickerDetails/AggregatesChart";
-import Grid from "@material-ui/core/Grid/Grid";
-import { useTickerState } from "context";
-import { ComponentType } from "react";
 
 const ErrorMessage = ({ error }: { error: string | Error }) => {
   return (

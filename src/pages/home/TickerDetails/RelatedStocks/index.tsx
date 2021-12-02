@@ -1,6 +1,8 @@
 import Button from "@material-ui/core/Button/Button";
+
 import { useTickerDispatch } from "context";
 import { theme } from "theme";
+
 import { SectionTitle } from "../SectionTitle";
 
 export type RelatedStocksProps = Pick<TickerDetails, "similar">;
