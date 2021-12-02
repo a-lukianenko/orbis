@@ -1,5 +1,6 @@
 import Box from "@material-ui/core/Box/Box";
 import { ResponsiveContainer, LineChart, Line } from "recharts";
+import { theme } from "theme";
 
 export type AggregatesChartProps = {
   data: PriceAggregate[];
@@ -15,7 +16,7 @@ export const AggregatesChart = <T extends AggregatesChartProps>({
           type='monotone'
           strokeWidth={4}
           dataKey='c'
-          stroke='#E51616'
+          stroke={theme.palette.error.light}
           dot={false}
         />
       </LineChart>

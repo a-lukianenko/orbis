@@ -26,7 +26,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: "#B6B7C3",
+    backgroundColor: theme.palette.neutral.main,
   },
   content: {
     flexGrow: 1,

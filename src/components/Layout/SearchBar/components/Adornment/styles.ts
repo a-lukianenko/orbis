@@ -1,7 +1,7 @@
 import makeStyles from "@material-ui/core/styles/makeStyles";
 
-export const useIconStyles = makeStyles({
+export const useIconStyles = makeStyles((theme) => ({
   colorPrimary: {
-    color: "grey",
+    color: theme.palette.neutral.main,
   },
-});
+}));
